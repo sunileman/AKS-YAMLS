@@ -24,7 +24,7 @@ spec:
           name: ssh
         resources:
           requests:
-            cpu: ".05"
+            cpu: "500m"
             memory: "1Gi"
           limits:
             cpu: "1"
@@ -32,11 +32,11 @@ spec:
         - name: NIFI_C2_ENABLE
           value: "true"
         - name: MINIFI_AGENT_CLASS
-          value: "test"
+          value: "listenSysLog"
         - name: NIFI_C2_REST_URL
-          value: "http://efmc2.centralus.azurecontainer.io:10080/efm/api/c2-protocol/heartbeat"
+          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/heartbeat"
         - name: NIFI_C2_REST_URL_ACK
-          value: "http://efmc2.centralus.azurecontainer.io:10080/efm/api/c2-protocol/acknowledge"
+          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/acknowledge"
 ---
 kind: Service             #+
 apiVersion: v1            #+
@@ -50,6 +50,14 @@ spec:                     #+
     targetPort: 10080     #+
     port: 10080              #+
     name: http            #+
+  - protocol: TCP         #+
+    targetPort: 9877     #+
+    port: 9877              #+
+    name: tcpsyslog    
+  - protocol: TCP         #+
+    targetPort: 9878     #+
+    port: 9878             #+
+    name: udpsyslog   
   - protocol: TCP         #+
     targetPort: 22        #+
     port: 22              #+

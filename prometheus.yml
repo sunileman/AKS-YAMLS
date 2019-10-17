@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: efm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: efm
+  template:
+    metadata:
+      labels:
+        app: efm
+    spec:
+      containers:
+      - name: efm-container
+        image: sunmanregistry.azurecr.io/efm:latest
+        ports:
+        - containerPort: 10080
+          name: http
+        - containerPort: 22
+          name: ssh
+        resources:
+          requests:
+            cpu: ".5"
+            memory: "2Gi"
+          limits:
+            cpu: "1"
+        env:
+        - name: VERSION
+          value: "11"
+        - name: NIFI_REGISTRY_ENABLED
+          value: "true"
+        - name: NIFI_REGISTRY_BUCKETNAME
+          value: "testbucket"
+        - name: NIFI_REGISTRY
+          value: "http://nifiregistry-service.default.svc.cluster.local"
+---
+apiVersion: extensions/v1beta1
+kind: Service             #+
+apiVersion: v1            #+
+metadata:                 #+
+  name: efm-service     #+
+spec:                     #+
+  selector:               #+
+    app: efm            #+
+  ports:                  #+
+  - protocol: TCP         #+
+    targetPort: 10080     #+
+    port: 80           #+
+    name: http            #+
+  - protocol: TCP         #+
+    targetPort: 22        #+
+    port: 22              #+
+    name: ssh             #+
+  type: LoadBalancer      #+
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
