@@ -17,7 +17,7 @@ spec:                     #+
     name: node-protocol-port            #+
   - protocol: TCP         #+
     targetPort: 10000     #+
-    port: 10000             #+
+    port: 10000              #+
     name: s2s            #+
   type: LoadBalancer      #+
 ---
@@ -39,7 +39,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nifi-container
-        image: sunmanregistry.azurecr.io/nifi:latest
+        image: apache/nifi:latest
         ports:
         - containerPort: 8080
           name: http
@@ -48,21 +48,13 @@ spec:
         resources:
           requests:
             cpu: ".5"
-            memory: "6Gi"
+            memory: "8Gi"
           limits:
             cpu: "1"
         env:
         - name: VERSION
           value: "1.9"
         - name: NIFI_CLUSTER_IS_NODE
-          value: "true"
+          value: "false"
         - name: NIFI_CLUSTER_NODE_PROTOCOL_PORT
           value: "9088"
-        - name: NIFI_ELECTION_MAX_CANDIDATES
-          value: "1"
-        - name: NIFI_ZK_CONNECT_STRING
-          value: "zoo1:2181"
-      initContainers:
-        - name: init-myservice
-          image: busybox:1.28
-          command: ['sh', '-c', 'until nslookup zoo1; do echo waiting for zookeeper; sleep 2; done;']

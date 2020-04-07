@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nifi-stateless
+spec:
+
+  # In the sidecar pattern, there is a main application
+  # container and a sidecar container.
+  containers:
+
+  # Main application container
+  - name: ns-container
+    # Simple application: write the current date
+    # to the log file every five seconds
+    image: apache/nifi-stateless # alpine is a simple Linux OS image
+
+    args: ["RunFromRegistry", "Continuous", "--json", "{\"registryUrl\":\"http://nifiregistry-service\",\"bucketId\":\"71efc3ea-fe1d-4307-97ce-589f78be05fb\",\"flowId\":\"9f4931c0-6a39-431d-891b-0e813501d321\"}"]

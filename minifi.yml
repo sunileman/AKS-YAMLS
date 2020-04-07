@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: minifi-container
-        image: sunmanregistry.azurecr.io/minifi-azure-aws:latest
+        image: sunmanregistry.azurecr.io/java-minifi:latest
         ports:
         - containerPort: 10080
           name: http
@@ -25,18 +25,24 @@ spec:
         resources:
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "200Mi"
           limits:
             cpu: "1"
         env:
         - name: NIFI_C2_ENABLE
           value: "true"
         - name: MINIFI_AGENT_CLASS
-          value: "listenSysLog"
+          value: "test1"
         - name: NIFI_C2_REST_URL
           value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/heartbeat"
         - name: NIFI_C2_REST_URL_ACK
           value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/acknowledge"
+        - name: JVM_ARGS_2
+          value: "-Xms100m"
+        - name: JVM_ARGS_3
+          value: "-Xms100m"
+        - name: HEARTBEAT
+          value: "10000"
 ---
 kind: Service             #+
 apiVersion: v1            #+
