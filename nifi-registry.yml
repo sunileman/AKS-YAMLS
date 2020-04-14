@@ -26,6 +26,7 @@ spec:
             memory: "1Gi"
           limits:
             cpu: "1"
+            memory: "1Gi"
         env:
         - name: VERSION
           value: "11"

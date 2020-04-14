@@ -51,6 +51,7 @@ spec:
             memory: "6Gi"
           limits:
             cpu: "1"
+            memory: "6Gi"
         env:
         - name: VERSION
           value: "1.9"

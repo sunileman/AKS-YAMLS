@@ -28,6 +28,7 @@ spec:
             memory: "200Mi"
           limits:
             cpu: "1"
+            memory: "200Mi"
         env:
         - name: NIFI_C2_ENABLE
           value: "true"
