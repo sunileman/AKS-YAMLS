@@ -43,3 +43,5 @@ spec:
 
 
     args: ["RunFromRegistry", "Continuous", "--json", "{\"registryUrl\":\"http://nifiregistry-service\",\"bucketId\":\"71efc3ea-fe1d-4307-97ce-589f78be05fb\",\"flowId\":\"c9092508-4deb-45d2-b6a4-b6a4da71db47\"}"]
+
+    

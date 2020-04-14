@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nifiregistry-container
-        image: sunmanregistry.azurecr.io/nifiregistry:latest
+        image: apache/nifi-registry:latest
         ports:
         - containerPort: 18080
           name: http
