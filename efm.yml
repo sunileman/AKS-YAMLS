@@ -14,12 +14,10 @@ spec:
     spec:
       containers:
       - name: efm-container
-        image: sunmanregistry.azurecr.io/efm:latest
+        image: sunmanregistry.azurecr.io/efm:1.0.0.1
         ports:
         - containerPort: 10080
           name: http
-        - containerPort: 22
-          name: ssh
         resources:
           requests:
             cpu: ".5"
@@ -27,15 +25,9 @@ spec:
           limits:
             cpu: "1"
             memory: "2Gi"
-        env:
-        - name: VERSION
-          value: "11"
-        - name: NIFI_REGISTRY_ENABLED
-          value: "true"
-        - name: NIFI_REGISTRY_BUCKETNAME
-          value: "testbucket"
-        - name: NIFI_REGISTRY
-          value: "http://nifiregistry-service.default.svc.cluster.local"
+        envFrom:
+          - configMapRef:
+             name: efm-configmap
 ---
 apiVersion: extensions/v1beta1
 kind: Service             #+
@@ -50,10 +42,6 @@ spec:                     #+
     targetPort: 10080     #+
     port: 80           #+
     name: http            #+
-  - protocol: TCP         #+
-    targetPort: 22        #+
-    port: 22              #+
-    name: ssh             #+
   type: LoadBalancer      #+
   loadBalancerSourceRanges:
   - 0.0.0.0/0
