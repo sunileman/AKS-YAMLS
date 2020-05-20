@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: minifi
+spec:
+  selector:
+    matchLabels:
+      app: minifi
+  template:
+    metadata:
+      labels:
+        app: minifi
+    spec:
+      containers:
+      - name: minifi-container
+        image: sunmanregistry.azurecr.io/java-minifi:latest
+        ports:
+        - containerPort: 10080
+          name: http
+        - containerPort: 6065
+          name: listenhttp  
+        resources:
+          requests:
+            cpu: ".5"
+            memory: "500Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+        env:
+        - name: NIFI_C2_ENABLE
+          value: "true"
+        - name: MINIFI_AGENT_CLASS
+          value: "test1"
+        - name: NIFI_C2_REST_URL
+          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/heartbeat"
+        - name: NIFI_C2_REST_URL_ACK
+          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/acknowledge"
+        - name: JVM_ARGS_2
+          value: "-Xms100m"
+        - name: JVM_ARGS_3
+          value: "-Xms100m"
+        - name: HEARTBEAT
+          value: "10000"
+---
+kind: Service             #+
+apiVersion: v1            #+
+metadata:                 #+
+  name: minifi-service     #+
+spec:                     #+
+  selector:               #+
+    app: minifi            #+
+  ports:                  #+
+  - protocol: TCP         #+
+    targetPort: 10080     #+
+    port: 10080              #+
+    name: http            #+
+  - protocol: TCP         #+
+    targetPort: 9877     #+
+    port: 9877              #+
+    name: tcpsyslog    
+  - protocol: TCP         #+
+    targetPort: 9878     #+
+    port: 9878             #+
+    name: udpsyslog              #+
+  - protocol: TCP         #+
+    targetPort: 6065        #+
+    port: 6065              #+
+    name: listenhttp             #+
+  type: LoadBalancer      #+

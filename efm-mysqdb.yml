@@ -36,9 +36,9 @@ spec:
         - name: NIFI_REGISTRY
           value: "http://nifiregistry-service.default.svc.cluster.local"
         - name: EFM_DB_URL
-          value: "jdbc:mysql://sunman-mysql.mysql.database.azure.com:3306/efm"
+          value: "jdbc:mariadb://sunman-mysql.mysql.database.azure.com:3306/efm?serverTimezone=UTC"
         - name: EFM_DB_DRIVER
-          value: "com.mysql.cj.jdbc.Driver"
+          value: "org.mariadb.jdbc.Driver"
         - name: EFM_DB_USERNAME
           value: "efm@sunman-mysql"
         - name: EFM_DB_PASSWORD

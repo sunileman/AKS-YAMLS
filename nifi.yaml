@@ -1,26 +1,3 @@
-apiVersion: extensions/v1beta1
-kind: Service             #+
-apiVersion: v1            #+
-metadata:                 #+
-  name: nifi-service     #+
-spec:                     #+
-  selector:               #+
-    app: nifi            #+
-  ports:                  #+
-  - protocol: TCP         #+
-    targetPort: 8080     #+
-    port: 8080              #+
-    name: ui            #+
-  - protocol: TCP         #+
-    targetPort: 9088     #+
-    port: 9088              #+
-    name: node-protocol-port            #+
-  - protocol: TCP         #+
-    targetPort: 8888     #+
-    port: 8888              #+
-    name: s2s            #+
-  type: LoadBalancer      #+
----
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:

@@ -1,0 +1,12 @@
+kind: ConfigMap 
+apiVersion: v1 
+metadata:
+  name: minifi-configmap 
+data:
+  NIFI_C2_ENABLE: "false"
+  MINIFI_AGENT_CLASS: "test99b"
+  NIFI_C2_REST_URL: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/heartbeat"
+  NIFI_C2_REST_URL_ACK: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/acknowledge"
+  JVM_ARGS_2: "-Xms100m"
+  JVM_ARGS_3: "-Xms100m"
+  HEARTBEAT: "10000"
