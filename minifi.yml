@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: minifi-container
-        image: sunmanregistry.azurecr.io/java-minifi:latest
+        image: sunmanregistry.azurecr.io/minifi-java:0.6.2
         ports:
         - containerPort: 10080
           name: http
@@ -24,26 +24,14 @@ spec:
           name: ssh
         resources:
           requests:
-            cpu: "500m"
+            cpu: ".5"
             memory: "200Mi"
           limits:
             cpu: "1"
-            memory: "200Mi"
-        env:
-        - name: NIFI_C2_ENABLE
-          value: "true"
-        - name: MINIFI_AGENT_CLASS
-          value: "test1"
-        - name: NIFI_C2_REST_URL
-          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/heartbeat"
-        - name: NIFI_C2_REST_URL_ACK
-          value: "http://efm-service.default.svc.cluster.local/efm/api/c2-protocol/acknowledge"
-        - name: JVM_ARGS_2
-          value: "-Xms100m"
-        - name: JVM_ARGS_3
-          value: "-Xms100m"
-        - name: HEARTBEAT
-          value: "10000"
+            memory: "300Mi"
+        envFrom:
+          - configMapRef:
+             name: minifi-configmap
 ---
 kind: Service             #+
 apiVersion: v1            #+
@@ -64,11 +52,7 @@ spec:                     #+
   - protocol: TCP         #+
     targetPort: 9878     #+
     port: 9878             #+
-    name: udpsyslog   
-  - protocol: TCP         #+
-    targetPort: 22        #+
-    port: 22              #+
-    name: ssh             #+
+    name: udpsyslog               #+
   - protocol: TCP         #+
     targetPort: 6065        #+
     port: 6065              #+
