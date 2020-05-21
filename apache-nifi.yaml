@@ -12,11 +12,9 @@ spec:
       labels:
         app: nifi
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: nifi-container
-        image: apache/nifi:1.9.2
+        image: apache/nifi:latest
         ports:
         - containerPort: 8080
           name: http
@@ -26,7 +24,7 @@ spec:
           name: listenhttp  
         resources:
           requests:
-            cpu: ".5"
+            cpu: "1"
             memory: "8Gi"
           limits:
             cpu: "1"
