@@ -28,6 +28,8 @@ spec:
         envFrom:
           - configMapRef:
              name: efm-configmap
+      imagePullSecrets:
+      - name: sunilesecret
 ---
 apiVersion: extensions/v1beta1
 kind: Service             #+
