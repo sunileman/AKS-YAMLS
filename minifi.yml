@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: minifi-container
-        image: sunmanregistry.azurecr.io/minifi-java:0.6.2
+        image: sunmanregistry.azurecr.io/minifi-java:0.6.0
         ports:
         - containerPort: 10080
           name: http
@@ -25,13 +25,15 @@ spec:
         resources:
           requests:
             cpu: ".5"
-            memory: "200Mi"
+            memory: "1Gi"
           limits:
             cpu: "1"
-            memory: "300Mi"
+            memory: "1Gi"
         envFrom:
           - configMapRef:
              name: minifi-configmap
+      imagePullSecrets:
+      - name: sunilesecret
 ---
 kind: Service             #+
 apiVersion: v1            #+
