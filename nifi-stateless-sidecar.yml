@@ -34,7 +34,13 @@ spec:
     # In reality, this sidecar would be a custom image
     # that uploads logs to a third-party or storage service.
     image: apache/nifi-stateless
-
+    resources:
+      requests:
+        cpu: "1"
+        memory: "10Gi"
+      limits:
+        cpu: "1"
+        memory: "10Gi"
     # Mount the pod's shared log file into the sidecar
     # container. NiFi Statless will read from this directory
     volumeMounts:
@@ -42,6 +48,6 @@ spec:
       mountPath: /var/log # nginx-specific mount path
 
 
-    args: ["RunFromRegistry", "Continuous", "--json", "{\"registryUrl\":\"http://nifiregistry-service\",\"bucketId\":\"82c8e982-4224-4bca-8bca-004de1f33472\",\"flowId\":\"53078603-2989-4dfb-83ca-6ab47e11f5d9\"}"]
+    args: ["RunFromRegistry", "Continuous", "--json", "{\"registryUrl\":\"http://nifiregistry-service\",\"bucketId\":\"02a1b222-fb47-4b1b-9c6c-ce2bfd6b4c87\",\"flowId\":\"742f5926-16a1-4fc0-8574-8e012c835855\"}"]
 
     
